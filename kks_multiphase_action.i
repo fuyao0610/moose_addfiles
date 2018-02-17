@@ -51,7 +51,7 @@
 
 [Materials]
   # simple toy free energies
-  [./KKSMaterials]
+  [./KKSMultiMaterials]
     eq_concentration = '0.2 0.6' 
   [../]
 
@@ -117,6 +117,15 @@
     dt = 0.5 # Initial time step.  In this simulation it changes.
     optimal_iterations = 6 # Time step will adapt to maintain this number of nonlinear iterations
   [../]
+
+  [./Adaptivity]
+    # Block that turns on mesh adaptivity. Note that mesh will never coarsen beyond initial mesh (before uniform refinement)
+#    initial_adaptivity = 2 # Number of times mesh is adapted to initial condition
+    refine_fraction = 0.6 # Fraction of high error that will be refined
+    coarsen_fraction = 0.1 # Fraction of low error that will coarsened
+    max_h_level = 2 # Max number of refinements used, starting from initial mesh (before uniform refinement)
+  [../]
+
 []
 
 [Preconditioning]
