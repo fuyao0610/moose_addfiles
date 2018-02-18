@@ -28,7 +28,7 @@ public:
 protected:
   virtual Real computeDFDOP(PFFunctionType type);
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
-
+  
   const MaterialProperty<Real> & _gamma;  
   const MaterialProperty<Real> & _kappa;  
   const MaterialProperty<Real> & _sigma;
@@ -38,10 +38,7 @@ protected:
   const MaterialProperty<Real> & _eps;  
   const MaterialProperty<Real> & _W;
   const unsigned int _op;
-  const VariablePhiSecond & _second_phi;
 
-  std::vector<const VariableSecond *> _laplac_vals;
-  //std::vector<const VariableValue *> _laplac_vals;
 };
 
 #endif // MULTIPHASE_H

@@ -14,7 +14,7 @@
 []
 
 [GlobalParams]
-  op_num = 5
+  op_num = 4
   var_name_base = gr
 []
 
@@ -23,23 +23,34 @@
   [../]
 []
 
+[UserObjects]
+  [./voronoi]
+    type = PolycrystalVoronoi
+    rand_seed = 105
+    grain_num = 4
+    coloring_algorithm = bt
+  [../]
+[]
+
 [ICs]
   [./PolycrystalICs]
-    [./PolycrystalMultiCircleIC]  #syntax in PhaseFieldApp.C
-      grain_num = 5
+#    [./PolycrystalColoringIC]
+#      polycrystal_ic_uo = voronoi
+#    [../]
+     [./PolycrystalMultiCircleIC]  #syntax in PhaseFieldApp.C
+      grain_num = 4
       circlespac = 400
       numtries = 1000
       radius = 150
-      rand_seed = 28872
+      rand_seed = 98666
       radius_variation = 0.1
       radius_variation_type = uniform
       columnar_3D = false
-    [../]
+     [../]
   [../]
 #    [./PolycrystalRandomIC]
 #      type = 0
 #    [../]
-  [../]
 []
 
 
@@ -104,14 +115,20 @@
 
 [Executioner]
   type = Transient
-  scheme = 'implicit-euler'
+  scheme = 'bdf2'
 
-  # Preconditioned JFNK (default)
+  #Preconditioned JFNK (default)
   solve_type = 'PJFNK'
 
+  petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart'
+  petsc_options_value = 'hypre boomeramg 31'
+  l_tol = 1.0e-4
+  l_max_its = 30
+  nl_max_its = 20
+  nl_rel_tol = 1.0e-9
   start_time = 0.0
-  num_steps = 5000
-  dt = 0.02
+  num_steps = 100
+  dt = 80.0
 []
 
 

@@ -167,7 +167,7 @@ PolycrystalMultiCircleIC::value(const Point & p)
   // If the current order parameter index (_op_index) is equal to the min_index, set the value to
   // 1.0
   if (_assigned_op[min_index] == _op_index) // Make sure that the _op_index goes from 0 to _op_num-1
-    return 0.99;
+    return 1.0;
   else
-    return 0.01 / (_op_num - 1);
+    return 0.0;
 }

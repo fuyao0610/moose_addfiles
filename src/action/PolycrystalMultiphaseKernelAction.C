@@ -67,11 +67,12 @@ PolycrystalMultiphaseKernelAction::act()
       params.set<bool>("use_displaced_mesh") = getParam<bool>("use_displaced_mesh");
       if (isParamValid("T"))
         params.set<std::vector<VariableName>>("T") = {getParam<VariableName>("T")};
-
+      
       std::string kernel_name = "ACBulk_" + var_name;
       _problem->addKernel("Multiphase", kernel_name, params);
     }
 
+    /*
     //
     // Set up ACInterface kernels
     //
@@ -79,11 +80,26 @@ PolycrystalMultiphaseKernelAction::act()
     {
       InputParameters params = _factory.getValidParams("ACInterface");
       params.set<NonlinearVariableName>("variable") = var_name;
-      params.set<bool>("implicit") = getParam<bool>("implicit");
-      params.set<bool>("use_displaced_mesh") = getParam<bool>("use_displaced_mesh");
+      params.applyParameters(parameters());
 
       std::string kernel_name = "ACInt_" + var_name;
       _problem->addKernel("ACInterface", kernel_name, params);
+    }
+    */
+
+    //
+    // Set up MultiInterface kernels
+    //
+
+    {
+      InputParameters params = _factory.getValidParams("MultiInterface");
+      params.set<NonlinearVariableName>("variable") = var_name;
+      params.set<bool>("implicit") = getParam<bool>("implicit");
+      params.set<bool>("use_displaced_mesh") = getParam<bool>("use_displaced_mesh");
+      params.set<unsigned int>("op") = op;
+      params.set<std::vector<VariableName>>("v") = v;
+      std::string kernel_name = "MultiInt_" + var_name;
+      _problem->addKernel("MultiInterface", kernel_name, params);
     }
 
    

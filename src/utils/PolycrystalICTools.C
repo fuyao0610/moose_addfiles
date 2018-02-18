@@ -1,9 +1,11 @@
-/****************************************************************/
-/* MOOSE - Multiphysics Object Oriented Simulation Environment  */
-/*                                                              */
-/*          All contents are licensed under LGPL V2.1           */
-/*             See LICENSE for full restrictions                */
-/****************************************************************/
+//* This file is part of the MOOSE framework
+//* https://www.mooseframework.org
+//*
+//* All rights reserved, see COPYRIGHT for full restrictions
+//* https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//*
+//* Licensed under LGPL 2.1, please see LICENSE for details
+//* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "PolycrystalICTools.h"
 
@@ -11,7 +13,7 @@
 #include "MooseMesh.h"
 #include "MooseVariable.h"
 
-// libMesh includes
+#include "libmesh/mesh_tools.h"
 #include "libmesh/periodic_boundaries.h"
 #include "libmesh/point_locator_base.h"
 
@@ -154,6 +156,7 @@ PolycrystalICTools::assignPointsToVariables_solution(const std::vector<Point> & 
   return assigned_op;
 }
 
+
 unsigned int
 PolycrystalICTools::assignPointToGrain(const Point & p,
                                        const std::vector<Point> & centerpoints,
@@ -183,6 +186,7 @@ PolycrystalICTools::assignPointToGrain(const Point & p,
   return min_index;
 }
 
+
 unsigned int
 PolycrystalICTools::assignPointToGrain_multicircle(const Point & p,
                                        const std::vector<Point> & centerpoints,
@@ -198,7 +202,7 @@ PolycrystalICTools::assignPointToGrain_multicircle(const Point & p,
   // Loops through all of the grain centers and finds the center that is closest to the point p
   for (unsigned int grain = 1; grain < grain_num; grain++)
   {
-    Real distance = mesh.minPeriodicDistance(var.number(), centerpoints[grain], p);
+    min_distance = mesh.minPeriodicDistance(var.number(), centerpoints[grain], p);
 
     if (min_distance < radii[grain])
     {

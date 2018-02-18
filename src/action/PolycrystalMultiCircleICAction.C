@@ -72,7 +72,7 @@ PolycrystalMultiCircleICAction::act()
     poly_params.set<unsigned int>("op_index") = op;
 
     poly_params.set<Real>("circlespac") = _circlespac;
-    poly_params.set<Real>("numtries") = _numtries;
+    poly_params.set<unsigned int>("numtries") = _numtries;
     poly_params.set<Real>("radius") = _radius;
     poly_params.set<unsigned int>("rand_seed") = _rand_seed;
     poly_params.set<Real>("radius_variation") = _radius_variation;

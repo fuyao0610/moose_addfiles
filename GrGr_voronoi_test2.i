@@ -23,10 +23,19 @@
   [../]
 []
 
+[UserObjects]
+  [./voronoi]
+    type = PolycrystalVoronoi
+    rand_seed = 105
+    grain_num = 4
+    coloring_algorithm = bt
+  [../]
+[]
+
 [ICs]
   [./PolycrystalICs]
-    [./PolycrystalVoronoiIC]
-      grain_num = 4
+    [./PolycrystalColoringIC]
+      polycrystal_ic_uo = voronoi
     [../]
 #    [./PolycrystalRandomIC]
 #      type = 0
@@ -90,15 +99,23 @@
   [../]
 []
 
-
 [Executioner]
   type = Transient
-  scheme = 'explicit-euler'
-  solve_type = 'LINEAR'
+  scheme = 'bdf2'
 
+  #Preconditioned JFNK (default)
+  solve_type = 'PJFNK'
+
+
+  petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart'
+  petsc_options_value = 'hypre boomeramg 31'
+  l_tol = 1.0e-4
+  l_max_its = 30
+  nl_max_its = 20
+  nl_rel_tol = 1.0e-9
   start_time = 0.0
-  num_steps = 2000
-  dt = 1
+  num_steps = 100
+  dt = 80.0
 []
 
 [Outputs]

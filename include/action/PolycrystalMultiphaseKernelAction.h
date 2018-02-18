@@ -10,7 +10,7 @@
 #include "Action.h"
 
 /**
- * Action that sets up ACGrGrPoly, ACInterface, TimeDerivative, and ACGBPoly
+ * Action that sets up Multiphase, MultiInterface, and TimeDerivative
  * kernels.
  */
 class PolycrystalMultiphaseKernelAction : public Action
